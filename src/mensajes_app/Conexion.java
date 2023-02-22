@@ -6,7 +6,7 @@ import java.sql.*;
  */
 public class Conexion {
     //Conexion Local
-    public static Connection conectar(){
+    public static Connection conexion(){
         try{
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mensajes_app","root","");
             return cn;
