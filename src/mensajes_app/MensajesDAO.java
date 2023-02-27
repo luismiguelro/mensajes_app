@@ -15,11 +15,8 @@ public class MensajesDAO {
     
     // Metodos
     public static void crearMensajeBD(Mensajes mensaje){
-        
-         
-        
         try{
-            Connection cn = Conexion.conexion();
+            Connection cn = Conexion.obtenerConexion();
         PreparedStatement ps = cn.prepareStatement(
         "INSERT INTO mensajes VALUES (?,?,?,current_timestamp(),current_timestamp(),current_timestamp())"
         );
@@ -27,7 +24,8 @@ public class MensajesDAO {
             ps.setString(2,mensaje.getMensaje());
             ps.setString(3,mensaje.getAutor_mensaje());
             ps.executeUpdate();
-            ps.close();
+            
+            Conexion.cerrarConexion();
             
             JOptionPane.showMessageDialog(null,"Mensaje creado correctamente...");
         } catch (SQLException ex){
