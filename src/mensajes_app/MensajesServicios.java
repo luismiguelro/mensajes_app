@@ -26,7 +26,7 @@ public class MensajesServicios {
     }
     
     public static void listarMensajes(){
-        
+        MensajesDAO.leerMensajesBD();
     }
     public static void borrarMensajes(){
         
