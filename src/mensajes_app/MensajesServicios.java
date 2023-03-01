@@ -4,6 +4,7 @@ a la capa de mensajes
  */
 package mensajes_app;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +27,20 @@ public class MensajesServicios {
     }
     
     public static void listarMensajes(){
-        MensajesDAO.leerMensajesBD();
+       String salida = "";
+       ArrayList <Mensajes> mensajes = MensajesDAO.leerMensajesBD();
+       
+       //recorrer
+       salida="****MENSAJES****\n";
+       for(Mensajes mensaje:mensajes){
+            System.out.println(mensaje.getId_mensaje());
+           salida+= "\nID: "+mensaje.getId_mensaje()+ "\n";
+           salida+= "Mensaje: "+mensaje.getMensaje()+ "\n";
+           salida+= "Autor: "+mensaje.getAutor_mensaje()+ "\n";
+           salida+= "Fecha "+mensaje.getFecha_mensaje()+ "\n";
+           salida +="*********************************";
+       }
+       JOptionPane.showMessageDialog(null,salida);
     }
     public static void borrarMensajes(){
         

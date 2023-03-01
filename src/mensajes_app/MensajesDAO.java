@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -35,8 +36,9 @@ public class MensajesDAO {
         }
     }
     
-    public static void leerMensajesBD(){
-        String salida ="";
+    public static ArrayList<Mensajes> leerMensajesBD(){
+        
+        ArrayList<Mensajes> mensajes = new ArrayList<Mensajes>();
          try{
             Connection cn = Conexion.obtenerConexion();
             PreparedStatement ps = cn.prepareStatement(
@@ -46,22 +48,24 @@ public class MensajesDAO {
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
-               
-               salida += "ID: "+rs.getInt("id_mensaje")+
-                       "\nMensaje: "+rs.getString("mensaje")+
-                       "\nAutor: "+rs.getString("autor_mensaje")+
-                       "\nFecha: "+rs.getString("fecha_mensaje");
-               
-               salida += "\n" ;
+                // añadir al array
+                 Mensajes mensaje = new Mensajes();
+                 mensaje.setId_mensaje(rs.getInt("id_mensaje"));
+                 mensaje.setMensaje(rs.getString("mensaje"));
+                 mensaje.setAutor_mensaje(rs.getString("autor_mensaje"));
+                 mensaje.setFecha_mensaje(rs.getString("fecha_mensaje"));
+ 
+                 mensajes.add(mensaje);
             }
             
             Conexion.cerrarConexion();
-            
-            JOptionPane.showMessageDialog(null,"****LISTA DE MENSAJES****\n"+salida);
+
         } catch (SQLException ex){
+            ex.printStackTrace();
             System.out.println(ex);
             
         }
+        return mensajes;
         
     }
     public static void borrarMensajesBD (int id_mensaje){
