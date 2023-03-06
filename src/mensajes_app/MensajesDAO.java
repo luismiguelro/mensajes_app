@@ -68,9 +68,25 @@ public class MensajesDAO {
         return mensajes;
         
     }
+    
     public static void borrarMensajesBD (int id_mensaje){
+        Connection cn = Conexion.obtenerConexion();
+         try{
+             PreparedStatement ps = cn.prepareStatement(
+        "DELETE FROM mensajes WHERE id_mensaje = ?"
+        );
+             ps.setInt(1,id_mensaje);
+             ps.executeUpdate();
+         } catch (SQLException ex){
+            ex.printStackTrace();
+            System.out.println(ex);
+             
+         }
         
+        Conexion.cerrarConexion();
     }
+    
+      
     
     public static void actualizar(Mensajes mensaje){
         

@@ -33,7 +33,6 @@ public class MensajesServicios {
        //recorrer
        salida="****MENSAJES****\n";
        for(Mensajes mensaje:mensajes){
-            System.out.println(mensaje.getId_mensaje());
            salida+= "\nID: "+mensaje.getId_mensaje()+ "\n";
            salida+= "Mensaje: "+mensaje.getMensaje()+ "\n";
            salida+= "Autor: "+mensaje.getAutor_mensaje()+ "\n";
@@ -43,6 +42,22 @@ public class MensajesServicios {
        JOptionPane.showMessageDialog(null,salida);
     }
     public static void borrarMensajes(){
+         ArrayList <Mensajes> mensajes = MensajesDAO.leerMensajesBD();
+       
+        int id_mensaje = Integer.parseInt(JOptionPane.showInputDialog(null,"Elige el ID del Mensaje que desees ELIMINAR:\n"));
+        
+        
+        int validacion  = Integer.parseInt(JOptionPane.showInputDialog("Estas seguro de eliminar el mensaje : " + "\n1:Si\n2:No"));
+        do{
+            if(validacion == 1){
+                MensajesDAO.borrarMensajesBD(id_mensaje);
+                JOptionPane.showMessageDialog(null,"Mensaje Eliminado...");
+                return;
+            } else{
+               JOptionPane.showMessageDialog(null,"Redirigiendo al menú ..."); 
+            } 
+        } while (validacion !=2);
+            
         
     }
     

@@ -15,8 +15,8 @@ public class Mensajes_app {
                         "Aplicación de Mensajes\n" +
                         "1.Crear un Mensaje\n" +
                         "2.Listar Mensaje\n" +
-                        "3.Editar Mensaje\n" +
-                        "4.Eliminar Mensaje\n" +
+                        "3.Eliminar Mensaje\n" +
+                        "4.Editar Mensaje\n" +
                         "0.Salir\n"+
                         "Ingresa una opción";
         int opcion=0;
@@ -34,7 +34,7 @@ public class Mensajes_app {
                     MensajesServicios.listarMensajes();
                     break;
                 case 3:
-                    MensajesServicios.editarMensajes();
+                   MensajesServicios.borrarMensajes();
                     break;
                 case 4: 
                     MensajesServicios.borrarMensajes();
