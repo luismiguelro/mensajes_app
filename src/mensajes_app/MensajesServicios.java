@@ -43,11 +43,11 @@ public class MensajesServicios {
     }
     public static void borrarMensajes(){
          ArrayList <Mensajes> mensajes = MensajesDAO.leerMensajesBD();
-       
+        listarMensajes();
         int id_mensaje = Integer.parseInt(JOptionPane.showInputDialog(null,"Elige el ID del Mensaje que desees ELIMINAR:\n"));
         
         
-        int validacion  = Integer.parseInt(JOptionPane.showInputDialog("Estas seguro de eliminar el mensaje : " + "\n1:Si\n2:No"));
+        int validacion  = Integer.parseInt(JOptionPane.showInputDialog("Estas seguro de eliminar el mensaje : "+id_mensaje+ "\n1:Si\n2:No"));
         do{
             if(validacion == 1){
                 MensajesDAO.borrarMensajesBD(id_mensaje);
@@ -62,7 +62,17 @@ public class MensajesServicios {
     }
     
     public static void editarMensajes(){
-        
+        //Obtener mensaje y id
+       String mensaje = JOptionPane.showInputDialog(null,"Escribe tu nuevo mensaje");
+       int id_mensaje = Integer.parseInt(JOptionPane.showInputDialog(null,"Escribe el ID del Mensaje que desees ACTUALIZAR"));
+       
+       //objeto
+       Mensajes actualizacion = new Mensajes();
+       actualizacion.setId_mensaje(id_mensaje);
+       actualizacion.setMensaje(mensaje);
+       
+       MensajesDAO.actualizar(actualizacion);
+       
     }
     
 }

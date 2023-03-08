@@ -37,7 +37,7 @@ public class Mensajes_app {
                    MensajesServicios.borrarMensajes();
                     break;
                 case 4: 
-                    MensajesServicios.borrarMensajes();
+                    MensajesServicios.editarMensajes();
                     break;
                 case 0: JOptionPane.showMessageDialog(null,"Hasta pronto... :)");
                         break;

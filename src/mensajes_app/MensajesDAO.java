@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -89,6 +91,31 @@ public class MensajesDAO {
       
     
     public static void actualizar(Mensajes mensaje){
+        Connection cn = Conexion.obtenerConexion();
+         try{
+             
+             //consulta para actualizar
+             PreparedStatement ps = cn.prepareStatement(
+        "UPDATE mensajes SET mensaje = ? WHERE id_mensaje =?"
+        );
+            
+             //parametros
+             ps.setString(1, mensaje.getMensaje());
+             ps.setInt(2,mensaje.getId_mensaje());
+             
+             //ejecutar sentencia
+             ps.executeUpdate();
+             
+              JOptionPane.showMessageDialog(null,"Mensaje actulizado correctamente...");
+              
+             //excepciones
+         } catch (SQLException ex){
+            ex.printStackTrace();
+            System.out.println(ex);
+             
+         }
+        
+        Conexion.cerrarConexion();
         
     }
     
