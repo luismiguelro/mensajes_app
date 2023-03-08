@@ -30,7 +30,7 @@ public class MensajesServicios {
        String salida = "";
        ArrayList <Mensajes> mensajes = MensajesDAO.leerMensajesBD();
        
-       //recorrer
+       //recorrer y guardar en variable salida
        salida="****MENSAJES****\n";
        for(Mensajes mensaje:mensajes){
            salida+= "\nID: "+mensaje.getId_mensaje()+ "\n";
@@ -42,11 +42,11 @@ public class MensajesServicios {
        JOptionPane.showMessageDialog(null,salida);
     }
     public static void borrarMensajes(){
-         ArrayList <Mensajes> mensajes = MensajesDAO.leerMensajesBD();
+        
         listarMensajes();
         int id_mensaje = Integer.parseInt(JOptionPane.showInputDialog(null,"Elige el ID del Mensaje que desees ELIMINAR:\n"));
         
-        
+        // validar la eliminacion del mensjae
         int validacion  = Integer.parseInt(JOptionPane.showInputDialog("Estas seguro de eliminar el mensaje : "+id_mensaje+ "\n1:Si\n2:No"));
         do{
             if(validacion == 1){
@@ -66,12 +66,19 @@ public class MensajesServicios {
        String mensaje = JOptionPane.showInputDialog(null,"Escribe tu nuevo mensaje");
        int id_mensaje = Integer.parseInt(JOptionPane.showInputDialog(null,"Escribe el ID del Mensaje que desees ACTUALIZAR"));
        
-       //objeto
+       boolean idVerificar = MensajesDAO.validarId(id_mensaje);
+       
+       if(idVerificar == true){
+            //objeto
        Mensajes actualizacion = new Mensajes();
        actualizacion.setId_mensaje(id_mensaje);
        actualizacion.setMensaje(mensaje);
        
        MensajesDAO.actualizar(actualizacion);
+       } else{
+           JOptionPane.showMessageDialog(null,"No existe un mensaje con el id: "+id_mensaje); 
+       }
+      
        
     }
     

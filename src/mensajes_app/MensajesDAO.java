@@ -16,21 +16,21 @@ import javax.swing.JOptionPane;
  * @author Luis Miguel
  */
 public class MensajesDAO {
-    
+    static Connection cn = Conexion.obtenerConexion();
+    static PreparedStatement ps = null;
+    static ResultSet rs = null;
     // Metodos
     public static void crearMensajeBD(Mensajes mensaje){
         try{
-            Connection cn = Conexion.obtenerConexion();
-        PreparedStatement ps = cn.prepareStatement(
+            //sentencia para insertar
+            
+         ps = cn.prepareStatement(
         "INSERT INTO mensajes VALUES (?,?,?,current_timestamp(),current_timestamp(),current_timestamp())"
         );
             ps.setInt(1,0);
             ps.setString(2,mensaje.getMensaje());
             ps.setString(3,mensaje.getAutor_mensaje());
             ps.executeUpdate();
-            
-            Conexion.cerrarConexion();
-            
             JOptionPane.showMessageDialog(null,"Mensaje creado correctamente...");
         } catch (SQLException ex){
             System.out.println(ex);
@@ -42,12 +42,12 @@ public class MensajesDAO {
         
         ArrayList<Mensajes> mensajes = new ArrayList<Mensajes>();
          try{
-            Connection cn = Conexion.obtenerConexion();
-            PreparedStatement ps = cn.prepareStatement(
+          
+             ps = cn.prepareStatement(
         "SELECT * FROM mensajes"
         );
             //obtener despues de la ejecucion
-            ResultSet rs = ps.executeQuery();
+             rs = ps.executeQuery();
             
             while(rs.next()){
                 // añadir al array
@@ -60,9 +60,7 @@ public class MensajesDAO {
                  mensajes.add(mensaje);
             }
             
-            Conexion.cerrarConexion();
-
-        } catch (SQLException ex){
+               } catch (SQLException ex){
             ex.printStackTrace();
             System.out.println(ex);
             
@@ -72,9 +70,10 @@ public class MensajesDAO {
     }
     
     public static void borrarMensajesBD (int id_mensaje){
-        Connection cn = Conexion.obtenerConexion();
+     
          try{
-             PreparedStatement ps = cn.prepareStatement(
+             // sentencia para eliminar
+              ps = cn.prepareStatement(
         "DELETE FROM mensajes WHERE id_mensaje = ?"
         );
              ps.setInt(1,id_mensaje);
@@ -84,18 +83,17 @@ public class MensajesDAO {
             System.out.println(ex);
              
          }
-        
-        Conexion.cerrarConexion();
+
     }
     
       
     
     public static void actualizar(Mensajes mensaje){
-        Connection cn = Conexion.obtenerConexion();
+       
          try{
              
              //consulta para actualizar
-             PreparedStatement ps = cn.prepareStatement(
+            ps = cn.prepareStatement(
         "UPDATE mensajes SET mensaje = ? WHERE id_mensaje =?"
         );
             
@@ -113,10 +111,33 @@ public class MensajesDAO {
             ex.printStackTrace();
             System.out.println(ex);
              
-         }
-        
-        Conexion.cerrarConexion();
-        
+         } 
     }
     
+    //metodo para validar id de un mensaje
+    public static boolean validarId(int id){
+          try{
+             
+             //consulta para actualizar
+            ps = cn.prepareStatement(
+        "SELECT *FROM mensajes WHERE id = ?;"
+        );
+            
+             //parametros
+             
+             ps.setInt(1,id);
+             
+             //ejecutar sentencia
+             ps.executeUpdate();
+             rs =ps.executeQuery();
+             
+              
+             //excepciones
+         } catch (SQLException ex){
+           System.out.println("No exite ID ("+ex+")");
+            return false;
+             
+         } 
+        return false;
+    }
 }
